@@ -1,0 +1,11 @@
+#!/usr/sbin/nft -f
+
+add table ip netsec_tbl
+
+add chain ip netsec_tbl netsec_fwd { type filter hook forward priority filter; policy drop; }
+
+add rule ip netsec_tbl netsec_fwd ip daddr 10.10.1.5 tcp dport 22 counter accept
+add rule ip netsec_tbl netsec_fwd ip daddr 10.10.1.5 tcp dport 23 counter accept
+add rule ip netsec_tbl netsec_fwd ip daddr 10.10.1.5 tcp dport 80 counter accept
+
+add rule ip netsec_tbl netsec_fwd ct state established, related counter accept

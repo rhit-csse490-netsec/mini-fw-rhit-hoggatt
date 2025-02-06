@@ -1,0 +1,9 @@
+#!/usr/sbin/nft -f
+
+include "./netsec_tbl.nft"
+
+define client_ip = 10.10.0.4
+define server_ip = 10.10.1.5
+
+add rule netsec_tbl netsec_in ip saddr $client_ip counter
+add rule ip netsec_tbl netsec_fwd ip saddr $client_ip ip daddr $server_ip counter

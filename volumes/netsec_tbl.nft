@@ -1,0 +1,9 @@
+#!/usr/sbin/nft -f
+
+#create the table netsec
+add table ip netsec_tbl
+
+#create incoming chain
+add chain netsec_tbl netsec_in { type filter hook input priority 0 ; policy accept ; comment "out first netsec chain!!!" ; }
+
+add chain netsec_tbl netsec_fwd { type filter hook forward priority filter ; policy accept ;}
